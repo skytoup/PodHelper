@@ -1,0 +1,29 @@
+[package]
+name = "pod_helper"
+version = "0.1.0"
+authors = ["skytoup"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+structopt = "0.3" 
+reqwest = { version = "0.10", features = ["json", "blocking"] } 
+tokio = { version = "0.2", features = ["full"] } 
+md-5 = "0.9.1" 
+futures = "0.3" 
+log = "0.4" 
+env_logger = "0.8.2" 
+comfy-table = "1.4.0" # 表格输出
+pbr = "1.0" # 终端进度条
+
+[dev-dependencies]
+criterion = "0.3"
+
+[[bench]]
+name = "my_benchmark"
+harness = false
+
+[profile.release]
+lto = true # 动态链接优化
+panic = 'abort' # 禁止生成错误时的调用栈
