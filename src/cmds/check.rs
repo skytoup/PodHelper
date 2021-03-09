@@ -1,14 +1,8 @@
-use std::{
-    cell::RefCell,
-    collections::HashMap,
-    fs::File,
-    io::{BufReader, Stdout},
-    rc::Rc,
-};
+use std::{cell::RefCell, collections::HashMap, fs::File, io::BufReader, rc::Rc};
 
 use comfy_table::Table;
 use futures::future::select_all;
-use pbr::ProgressBar;
+use indicatif::{ProgressBar, ProgressStyle};
 
 use crate::{
     common::{PodSpecGroup, PodVer},
@@ -108,10 +102,10 @@ pub async fn check_file(opt: CheckOpts) -> Result<()> {
         .collect();
 
     log::debug!("start request podspec idx");
-    let mut pb = create_pb(fs.len() as u64);
+    let pb = create_pb(fs.len() as u64);
     while !fs.is_empty() {
         let ((hex, res), _idx, remaining) = select_all(fs).await;
-        pb.inc();
+        pb.inc(1);
 
         match res {
             Ok(val) => {
@@ -150,7 +144,8 @@ pub async fn check_file(opt: CheckOpts) -> Result<()> {
         fs = remaining;
     }
     log::debug!("end request podspec idx");
-    pb.finish_print("request done.");
+    // pb.finish_print("request done.");
+    pb.finish_with_message("request done.");
     drop(pb);
 
     // output
@@ -160,11 +155,12 @@ pub async fn check_file(opt: CheckOpts) -> Result<()> {
 }
 
 /// 创建进度条显示
-fn create_pb(count: u64) -> ProgressBar<Stdout> {
-    let mut pb = ProgressBar::new(count);
-    pb.format("╢▌▌░╟");
-    pb.show_speed = false;
-    pb.show_time_left = false;
+fn create_pb(count: u64) -> ProgressBar {
+    let pb = ProgressBar::new(count);
+    let style = ProgressStyle::default_bar()
+        .template("[{elapsed_precise}] {spinner} {bar:50} {pos}/{len} {percent}%")
+        .progress_chars("▌▌░");
+    pb.set_style(style);
 
     pb
 }

@@ -16,6 +16,7 @@ log = "0.4"
 env_logger = "0.8.2" 
 comfy-table = "1.4.0" # 表格输出
 pbr = "1.0" # 终端进度条
+indicatif = "0.15" # 终端进度条
 
 [dev-dependencies]
 criterion = "0.3"
