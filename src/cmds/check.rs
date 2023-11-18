@@ -158,8 +158,9 @@ pub async fn check_file(opt: CheckOpts) -> Result<()> {
 fn create_pb(count: u64) -> ProgressBar {
     let pb = ProgressBar::new(count);
     let style = ProgressStyle::default_bar()
+        .progress_chars("▌▌░")
         .template("[{elapsed_precise}] {spinner} {bar:50} {pos}/{len} {percent}%")
-        .progress_chars("▌▌░");
+        .unwrap();
     pb.set_style(style);
 
     pb

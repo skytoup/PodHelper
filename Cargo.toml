@@ -1,6 +1,6 @@
 [package]
 name = "pod_helper"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["skytoup"]
 edition = "2018"
 
@@ -8,15 +8,15 @@ edition = "2018"
 
 [dependencies]
 structopt = "0.3" 
-reqwest = { version = "0.10", features = ["json", "blocking"] } 
-tokio = { version = "0.2", features = ["full"] } 
-md-5 = "0.9.1" 
+reqwest = { version = "0.11", features = ["default", "json", "blocking", "gzip"] } 
+tokio = { version = "1.0", features = ["full"] } 
+md-5 = "0.10" 
 futures = "0.3" 
 log = "0.4" 
-env_logger = "0.8.2" 
+env_logger = "0.10" 
 comfy-table = "1.4.0" # 表格输出
 pbr = "1.0" # 终端进度条
-indicatif = "0.15" # 终端进度条
+indicatif = "0.17" # 终端进度条
 
 [dev-dependencies]
 criterion = "0.3"

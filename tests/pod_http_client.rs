@@ -10,5 +10,6 @@ async fn test_fetch_idx_pods() {
     let name = "AppNetworkManager";
     let hex = utils::name_hash(name).unwrap();
     let content = PodHTTPClient::default().fetch_idx_pods(&hex).await.unwrap();
+
     assert!(content.contains(name));
 }

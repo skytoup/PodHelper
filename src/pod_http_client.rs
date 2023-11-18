@@ -18,6 +18,7 @@ impl PodHTTPClient {
             client: Client::builder()
                 .connect_timeout(Duration::from_secs(connect_sec))
                 .timeout(Duration::from_secs(timeout_sec))
+                .gzip(true)
                 .build()
                 .unwrap(),
             semaphore: Semaphore::new(concurrent),
